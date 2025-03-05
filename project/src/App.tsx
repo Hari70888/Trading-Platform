@@ -4,7 +4,8 @@ import { Chart } from './components/Chart';
 import { MarketList } from './components/MarketList';
 import { OrdersTable } from './components/OrdersTable';
 import { SideNavigation } from './components/SideNavigation';
-import { Leaderboard } from './components/Leaderboard';
+import Leaderboard from './components/Leaderboard';
+
 
 function App() {
   const [selectedTab, setSelectedTab] = useState('All');

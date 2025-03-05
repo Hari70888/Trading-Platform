@@ -1,43 +1,80 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import { FaMedal, FaComment, FaStar, FaEye } from "react-icons/fa";
 
-export const Leaderboard: React.FC = () => {
+interface Trader {
+  id: number;
+  name: string;
+  role: string;
+  profit: number;
+}
+
+const initialTraders: Trader[] = [
+  { id: 1, name: "Thomas L. Fletcher", role: "Product Designer", profit: 6400 },
+  { id: 2, name: "Jane Cooper", role: "UI Designer", profit: 6400 },
+  { id: 3, name: "Wade Warren", role: "Medical Assistant", profit: 6400 },
+  { id: 4, name: "Esther Howard", role: "President of Sales", profit: 6400 },
+  { id: 5, name: "Brooklyn Simmons", role: "Marketing Coordinator", profit: 6400 },
+  { id: 6, name: "Courtney Henry", role: "Medical Assistant", profit: 6400 },
+  { id: 7, name: "Darrell Steward", role: "Web Designer", profit: 6400 },
+];
+
+const Leaderboard: React.FC = () => {
+  const [traders, setTraders] = useState<Trader[]>(initialTraders);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTraders((prevTraders) =>
+        prevTraders
+          .map((trader) => ({
+            ...trader,
+            profit: trader.profit + Math.floor(Math.random() * 200 - 100),
+          }))
+          .sort((a, b) => b.profit - a.profit)
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const getMedal = (index: number) => {
+    if (index === 0) return <FaMedal className="text-yellow-500" size={20} />;
+    if (index === 1) return <FaMedal className="text-gray-400" size={20} />;
+    if (index === 2) return <FaMedal className="text-orange-500" size={20} />;
+    return <span className="font-bold text-white">{index + 1}</span>;
+  };
+
   return (
-    <div className="bg-[#0a0d1c] border-l border-gray-800 w-72 p-4">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold">Space</h2>
-        <button className="text-gray-400">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-          </svg>
-        </button>
+    <div className="p-4 max-w-lg mx-auto bg-gradient-to-b from-blue-900 to-black shadow-lg rounded-lg text-white">
+      <h2 className="text-xl font-bold mb-4 text-center">Leaderboard</h2>
+      <div className="flex space-x-4 mb-4 justify-center">
+        <button className="bg-purple-600 text-white px-4 py-1 rounded-md">Reviews</button>
+        <button className="bg-gray-700 text-white px-4 py-1 rounded-md">Ratings</button>
+        <button className="bg-gray-700 text-white px-4 py-1 rounded-md">Followers</button>
       </div>
-      
-      <div className="bg-[#141828] rounded-lg p-4 mb-4">
-        <div className="text-center mb-4">
-          <h3 className="text-xl font-bold mb-2">Meet the Space feed</h3>
-          <p className="text-gray-400">Your guide to analysis and smart trading</p>
-        </div>
-        
-        <div className="relative mt-6">
-          <div className="bg-[#1a1f2e] rounded-lg p-4">
-            <div className="flex justify-between items-center mb-2">
-              <div className="w-6 h-6 bg-blue-600 rounded"></div>
-              <div className="text-xs text-gray-400">Buy</div>
+      <ul>
+        {traders.map((trader, index) => (
+          <li
+            key={trader.id}
+            className="flex justify-between items-center p-3 border-b border-gray-600"
+          >
+            <div className="flex items-center space-x-3">
+              {getMedal(index)}
+              <div>
+                <p className="font-bold text-white">{trader.name}</p>
+                <p className="text-sm text-gray-300">{trader.role}</p>
+              </div>
             </div>
-            <div className="h-16 bg-[#141828] rounded"></div>
-          </div>
-          
-          <div className="absolute -right-2 top-1/2 w-4 h-4 bg-orange-500 rounded-full"></div>
-        </div>
-        
-        <p className="text-sm text-gray-400 mt-4">
-          Read timely analysis, learn how it is built, compare expert insights with your own, and master analytical skills.
-        </p>
-        
-        <button className="w-full bg-blue-600 text-white rounded-lg py-2 mt-4">
-          CUSTOMISE FEED
-        </button>
-      </div>
+            <div className="flex items-center space-x-2">
+              <FaComment className="text-gray-400" /> <span>2.4k</span>
+              <FaStar className="text-yellow-500" /> <span>{trader.profit}</span>
+              <FaEye className="text-gray-400" /> <span>456</span>
+              <button className="bg-orange-500 text-white px-3 py-1 rounded-md">Follow</button>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
+
+export default Leaderboard;
