@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FiStar } from 'react-icons/fi';
 import { fetchMarketData } from './services/marketDataService';
-import Chart from './components/Chart';
-import { MarketList } from './components/MarketList';
-import { OrdersTable } from './components/OrdersTable';
-import { SideNavigation } from './components/SideNavigation';
+import Chart from './pages/Chart';
+import { MarketList } from './pages/MarketList';
+import { OrdersTable } from './pages/OrdersTable';
+import { SideNavigation } from './pages/SideNavigation';
 
 export type MarketData = {
   pair: string;
