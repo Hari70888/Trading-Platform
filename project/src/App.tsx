@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './components/Login';
-
-
 import { FiStar } from 'react-icons/fi';
 import { fetchMarketData } from './services/marketDataService';
-import   Chart from './pages/Chart';
-import { MarketList } from './pages/MarketList';
-import { OrdersTable } from './pages/OrdersTable';
-import { SideNavigation } from './pages/SideNavigation';
+import Chart from './components/Chart';
+import { MarketList } from './components/MarketList';
+import { OrdersTable } from './components/OrdersTable';
+import { SideNavigation } from './components/SideNavigation';
 
 export type MarketData = {
   pair: string;
@@ -20,14 +16,6 @@ export type MarketData = {
 };
 
 function App(): JSX.Element {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/pages" element={<Dash />} />
-      </Routes>
-    </Router>
-
   const [selectedCompany, setSelectedCompany] = useState('AAPL'); // Default selected company
   const [selectedMarket, setSelectedMarket] = useState<MarketData | null>(null); // To hold the selected market data
   const [marketData, setMarketData] = useState<MarketData[]>([]);
@@ -77,17 +65,7 @@ function App(): JSX.Element {
   return (
     <div className="min-h-screen bg-[#0a0d1c] text-white flex">
       <SideNavigation />
-      {/* Other components can be rendered here based on the route */}
-
-      {/* Other components can be rendered here based on the route */}
-
-      {/* Other components can be rendered here based on the route */}
-
       <div className="flex-1 flex flex-col">
-        {/* Other components can be rendered here based on the route */}
-
-        {/* Other components can be rendered here based on the route */}
-
         <header className="flex justify-between items-center px-4 py-2 border-b border-gray-800">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">

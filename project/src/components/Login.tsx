@@ -10,22 +10,23 @@ const Login: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
+
     try {
       const response = await fetch('https://your-backend-api.com/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-      
-      if (!response.ok)
+
+      // ✅ Fix: Wrap `if (!response.ok)` properly
+      if (!response.ok) {
         throw new Error('Invalid credentials');
       }
 
       const data = await response.json();
       localStorage.setItem('accessToken', data.accessToken); // Store access key
       navigate('/dashboard'); // Navigate to user dashboard or home
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message || 'Login failed');
     }
   };
